@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Navigation Tools — Guide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- (Optionnel) Reprend ton CSS “Mission Control” : soit tu copies le style de index.html,
+       soit tu mets un fichier CSS commun dans static/app.css.
+       Ici, version simple et lisible. -->
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:#0b1020;color:#eaf0ff;}
+    .container{max-width:1000px;margin:0 auto;padding:24px 16px 40px;}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+    a{color:#5b8cff;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;margin-top:14px;}
+    h1{margin:0;font-size:22px}
+    h2{margin:0 0 10px;font-size:16px}
+    p,li{color:rgba(234,240,255,.9);line-height:1.5}
+    code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:999px;border:1px solid rgba(255,255,255,.08)}
+    .k{display:grid;grid-template-columns:1fr;gap:10px}
+    @media (min-width:800px){.k{grid-template-columns:1fr 1fr}}
+    .btn{
+      display:inline-block;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);color:#eaf0ff;font-weight:700
+    }
+    .btn:hover{background:rgba(255,255,255,.1)}
+    .muted{color:rgba(147,164,199,.95);font-size:13px}
+    .hr{height:1px;background:rgba(255,255,255,.08);margin:12px 0}
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="top">
+      <div>
+        <h1>Guide d’utilisation — Navigation Tools</h1>
+        <div class="muted">Planification d’itinéraire TSP (vol d’oiseau) • Carte interactive • Export KML</div>
+      </div>
+      <div>
+        <a class="btn" href="/">← Retour à l’application</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>1) À quoi sert l’app</h2>
+      <p>
+        L’app calcule un ordre de visite des points (TSP) en <b>vol d’oiseau</b> (distance directe),
+        affiche l’itinéraire sur la carte, puis permet d’exporter un fichier <b>KML</b> pour Google Earth / QGIS.
+      </p>
+      <p class="muted">
+        Important : la distance utilisée est “ligne droite” (Haversine), pas la distance routière.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>2) Étapes d’utilisation</h2>
+      <ol>
+        <li>Renseigne le <b>Point de départ</b> (lat, lon).</li>
+        <li>Colle la liste des <b>autres points</b> (1 point par ligne).</li>
+        <li>Clique <b>Calculer l’itinéraire</b> pour voir la carte + tableau.</li>
+        <li>Optionnel : clique <b>Télécharger KML</b> pour exporter l’itinéraire.</li>
+        <li>Pour repartir à zéro : clique <b>Reset Ops</b>.</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h2>3) Formats de coordonnées acceptés</h2>
+      <div class="k">
+        <div>
+          <p><b>A) Décimal</b></p>
+          <ul>
+            <li><code>12.40446, 3.38011</code></li>
+            <li><code>12.40446 3.38011</code></li>
+          </ul>
+        </div>
+        <div>
+          <p><b>B) DMS complet</b></p>
+          <ul>
+            <li><code>12°22'52.26"N , 3°25'29.91"E</code></li>
+          </ul>
+        </div>
+        <div>
+          <p><b>C) Degrés + hémisphère</b></p>
+          <ul>
+            <li><code>12.41667° N, 3.51667° E</code></li>
+            <li><code>12.41667°N, 3.51667°E</code></li>
+          </ul>
+        </div>
+        <div>
+          <p><b>Conseils</b></p>
+          <ul>
+            <li>1 point par ligne dans la zone “Autres points”.</li>
+            <li>Tu peux mélanger les formats (décimal / DMS).</li>
+            <li>Utilise <code>,</code> entre lat et lon si possible (plus robuste).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>4) Lecture de la carte</h2>
+      <ul>
+        <li>Les marqueurs sont <b>numérotés</b> : l’ordre de passage.</li>
+        <li>La ligne relie les points en ligne droite (vol d’oiseau).</li>
+        <li>Les flèches indiquent le <b>sens</b> de l’itinéraire (si activées).</li>
+        <li>Clique sur un point pour voir : coordonnées, distance du segment, distance cumulée.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>5) Export KML</h2>
+      <p>
+        Le bouton <b>Télécharger KML</b> génère un fichier <code>.kml</code> contenant :
+      </p>
+      <ul>
+        <li>un point (Placemark) pour chaque waypoint</li>
+        <li>une ligne (LineString) pour l’itinéraire</li>
+      </ul>
+      <div class="hr"></div>
+      <p><b>Ouvrir le KML</b></p>
+      <ul>
+        <li>Google Earth : File → Open → choisir le KML</li>
+        <li>QGIS : Layer → Add Layer → Add Vector Layer → KML</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>6) Problèmes fréquents</h2>
+      <ul>
+        <li><b>Erreur de parsing</b> : vérifie le format (virgule entre lat/lon, N/E/S/W correct).</li>
+        <li><b>Flèches absentes</b> : plugin PolylineDecorator non chargé (si offline, le mettre dans <code>static/</code>).</li>
+        <li><b>Icône onglet ne change pas</b> : fais <b>Ctrl+F5</b> (cache navigateur).</li>
+        <li><b>Résultats bizarres</b> : si points très proches/dupliqués, l’algo peut faire des segments à 0 km.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>7) Utilisation en .exe (Windows)</h2>
+      <ul>
+        <li>L’exécutable lance un serveur local.</li>
+        <li>Tu ouvres l’app dans ton navigateur à <code>http://127.0.0.1:5000</code> (ou auto-ouverture si activée).</li>
+        <li>Pour une version <b>offline</b> complète : Leaflet + plugin doivent être dans <code>static/vendor/</code>.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>8) Bonnes pratiques “drone reco” (vol d’oiseau)</h2>
+      <ul>
+        <li>Évite les segments très longs : ils coûtent cher sur la distance totale.</li>
+        <li>Si tu fais une reconnaissance d’axe (route/oléoduc), un mode “corridor” est souvent plus adapté qu’un TSP par points.</li>
+        <li>Pense à segmenter par batterie (missions multi-sorties) quand tu passeras en mode terrain.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <p class="muted">
+        Navigation Tools • Guide — si tu veux, on peut ajouter une page “À propos” + version, et un menu en haut.
+      </p>
+    </div>
+  </div>
+</body>
+</html>

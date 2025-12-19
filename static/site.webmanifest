@@ -1,0 +1,19 @@
+{
+  "name": "NavToolsKit",
+  "short_name": "NavToolsKit",
+  "icons": [
+    {
+      "src": "favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#2f6bff",
+  "background_color": "#0b1020",
+  "display": "standalone"
+}
